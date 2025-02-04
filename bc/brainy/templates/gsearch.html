@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recipe Finder | Brainy Cook</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'brainy/search.css' %}">
+</head>
+<body>
+
+    <h1>AI-Powered Recipe Finder</h1>
+
+    <!-- Ingredient Input Form -->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="ingredients" placeholder="Enter ingredients (comma-separated)">
+        <button type="submit">Find Recipes</button>
+    </form>
+
+    <!-- Display Recipes -->
+    {% if recipes %}
+        <div class="recipe-list">
+            {% for recipe in recipes %}
+                <div class="recipe-card">
+                    <img src="{{ recipe.image }}" alt="Recipe Image">
+                    <h2>{{ recipe.name }}</h2>
+                    <p><strong>Diet Type:</strong> {{ recipe.diet }}</p>
+                    <button onclick="viewRecipe('{{ recipe.name }}')">Get Recipe</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        function viewRecipe(recipeName) {
+            window.location.href = "/recipe-detail/" + encodeURIComponent(recipeName);
+        }
+    </script>
+
+</body>
+</html>

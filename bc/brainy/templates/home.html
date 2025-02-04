@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainy Cook - Recipe Recommendation System</title>
+  
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'brainy/home.css' %}">
+  <style>
+    /* General body style */
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f1f1f1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #0066cc;
+    padding: 15px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .top-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.app-name h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.auth-links a {
+    margin-left: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Intro Section */
+.intro-section {
+    text-align: center;
+    padding: 50px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.intro-section h2 {
+    font-size: 36px;
+}
+
+.intro-section p {
+    font-size: 18px;
+}
+
+/* Features Section */
+.features-section {
+    text-align: center;
+    padding: 30px;
+    background: #f8f8f8;
+}
+
+.features-section h3 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.features-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.features-section li {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Search Buttons Section */
+.search-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.search-btn {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 20px 40px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+    width: 250px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #005bb5;
+}
+
+.search-btn:focus {
+    outline: none;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .search-buttons {
+        flex-direction: column;
+    }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-nav">
+      <div class="app-name">
+        <h1>Brainy Cook</h1>  
+      </div>
+      <div class="auth-links">
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="intro-section">
+    <h2>Welcome to Brainy Cook</h2>
+    <p>Your professional recipe recommendation system. Explore meals, discover ingredients, and find delicious recipes!</p>
+  </div>
+
+  <div class="features-section">
+    <h3>Features:</h3>
+    <ul>
+      <li>Search by Meal Name</li>
+      <li>Search by Region</li>
+      <li>Search by Ingredients</li>
+      <li>Search by First Letter</li>
+      <li>Browse by Category</li>
+      <li>Random Meal Generator</li>
+    </ul>
+  </div>
+
+  <div class="search-buttons">
+    <button class="search-btn" id="meal-name">Search by Meal Name</button>
+    <button class="search-btn" id="region">Search by Region</button>
+    <a href="/ingredients/">
+        <button class="search-btn" id="ingredients">Search by Ingredients</button>
+    </a>
+    
+    
+    <button class="search-btn" id="first-letter">Search by First Letter</button>
+    <button class="search-btn" id="category">Search by Category</button>
+    <button class="search-btn" id="random-meal">Random Meal Generator</button>
+  </div>
+
+</body>
+</html>
