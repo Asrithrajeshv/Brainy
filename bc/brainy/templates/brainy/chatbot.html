@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="{% static 'brainy/cstyle.css' %}">
+    <script src="{% static 'brainy/cscript.js' %}" defer></script>
+</head>
+<body>
+    <h1>Welcome to Chatbot</h1>
+    <div id="chatbot-container">
+        <div id="chat-output"></div>
+        <input type="text" id="user-query" placeholder="Type your question...">
+        <button id="send-query">Send</button>
+    </div>
+</body>
+</html>
