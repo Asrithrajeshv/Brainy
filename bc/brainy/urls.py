@@ -8,7 +8,7 @@ urlpatterns = [
     path('ingredients/', TemplateView.as_view(template_name='brainy/search.html'), name='search_page'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
-    path('home/', views.home_view, name='home'),
+    path('', views.home_view, name='home'),
     path('gsearch/', views.search_recipes_view, name='search'),
     path('recipe-detail/<str:recipe_name>/', views.recipe_detail_view, name='recipe-detail'),
 ]
