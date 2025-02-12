@@ -3,93 +3,103 @@ const mealList = document.getElementById("meal");
 const mealDetailsContent = document.querySelector(".meal-details-content");
 const recipeCloseBtn = document.getElementById("recipe-close-btn");
 
-// Event listeners
+const API_KEY = "8fec620392384f819c73a5e188f16c36"; // Replace with your Spoonacular API key
+
+// Event Listeners
 searchBtn.addEventListener("click", getMealList);
 mealList.addEventListener("click", getMealRecipe);
-recipeCloseBtn.addEventListener("click", () => {
+recipeCloseBtn.addEventListener(() => {
     mealDetailsContent.parentElement.classList.remove("showRecipe");
 });
 
-// Get meal list that matches with the ingredient
-function getMealList() {
+
+    // ✅ Check if input contains only letters (No numbers or special characters)
+  
+// Get meal list based on multiple ingredients
+async function getMealList() {
     let searchInputTxt = document.getElementById("search-input").value.trim();
-
-    // Check if input is empty
+    
+    if (!/^[A-Za-z\s]+$/.test(searchInputTxt)) {  
+        mealList.innerHTML = `<p>❌ Only letters are allowed! No numbers or special characters.</p>`;
+        return;
+    }
     if (searchInputTxt === "") {
-        mealList.innerHTML = `<p>Please enter an ingredient to search for meals.</p>`;
+        mealList.innerHTML = `<p>Please enter at least one ingredient.</p>`;
         return;
     }
 
-    // Check if input is a number
-    if (!isNaN(searchInputTxt)) {
-        console.log("It is a number");
-        mealList.innerHTML = `<h3><p>😂 It is a number! Are you trying to order by meal codes?</p></h3>`;
-        return;
-    }
-   
+    let ingredients = searchInputTxt.split(",").map(ing => ing.trim()).join(",");
 
-    // Fetch meal data
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputTxt}`)
-        .then(response => response.json())
-        .then(data => {
-            let html = "";
-            if (data.meals) {
-                data.meals.forEach(meal => {
-                    html += `
-                        <div class="meal-item" data-id="${meal.idMeal}">
-                            <div class="meal-img">
-                                <img src="${meal.strMealThumb}" alt="food">
-                            </div>
-                            <div class="meal-name">
-                                <h3>${meal.strMeal}</h3>
-                                <a href="#" class="recipe-btn">Get Recipe</a>
-                            </div>
+    try {
+        let response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=10&apiKey=${API_KEY}`);
+        let data = await response.json();
+
+        let html = "";
+        if (data.length > 0) {
+            data.forEach(meal => {
+                html += `
+                    <div class="meal-item" data-id="${meal.id}">
+                        <div class="meal-img">
+                            <img src="${meal.image}" alt="food">
                         </div>
-                    `;
-                });
-                mealList.classList.remove("notFound");
-            } else {
-                html = `<p>😔 Sorry, we didn't find any meal with that ingredient.</p>`;
-                mealList.classList.add("notFound");
-            }
-            mealList.innerHTML = html;
-        })
-        .catch(error => {
-            mealList.innerHTML = `<p>⚠️ Oops! Something went wrong. Please try again later.</p>`;
-            console.error("Error fetching meal data:", error);
-        });
+                        <div class="meal-name">
+                            <h3>${meal.title}</h3>
+                            <a href="#" class="recipe-btn">Get Recipe</a>
+                        </div>
+                    </div>
+                `;
+            });
+            mealList.classList.remove("notFound");
+        } else {
+            html = "<p>😞 No meals found with these ingredients.</p>";
+            mealList.classList.add("notFound");
+        }
+
+        mealList.innerHTML = html;
+    } catch (error) {
+        mealList.innerHTML = `<p>⚠️ Error fetching meal data. Please try again.</p>`;
+        console.error("API Error:", error);
+    }
 }
 
-// Get recipe of the meal
-function getMealRecipe(e) {
+// Get detailed recipe
+async function getMealRecipe(e) {
     e.preventDefault();
     if (e.target.classList.contains("recipe-btn")) {
         let mealItem = e.target.parentElement.parentElement;
-        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
-            .then(response => response.json())
-            .then(data => mealRecipeModal(data.meals))
-            .catch(error => console.error("Error fetching meal recipe:", error));
-    }
-}
+        let mealId = mealItem.dataset.id;
 
-// Create a modal for the meal recipe
-function mealRecipeModal(meal) {
-    console.log(meal);
-    meal = meal[0];
-    let html = `
-        <h2 class="recipe-title">${meal.strMeal}</h2>
-        <p class="recipe-category">${meal.strCategory}</p>
-        <div class="recipe-instruct">
-            <h3>Instructions:</h3>
-            <p>${meal.strInstructions}</p>
-        </div>
-        <div class="recipe-meal-img">
-            <img src="${meal.strMealThumb}" alt="">
-        </div>
-        <div class="recipe-link">
-            <a href="${meal.strYoutube}" target="_blank">Watch Video</a>
-        </div>
-    `;
-    mealDetailsContent.innerHTML = html;
-    mealDetailsContent.parentElement.classList.add("showRecipe");
+        try {
+            let response = await fetch(`https://api.spoonacular.com/recipes/${mealId}/information?apiKey=${API_KEY}`);
+            let meal = await response.json();
+
+            let html = `
+                <h2 class="recipe-title">${meal.title}</h2>
+                <p class="recipe-category">${meal.dishTypes ? meal.dishTypes.join(", ") : "N/A"}</p>
+                <div class="recipe-instruct">
+                    <h3>Instructions:</h3>
+                    <p>${meal.instructions || "No instructions available."}</p>
+                </div>
+                <div class="recipe-meal-img">
+                    <img src="${meal.image}" alt="">
+                </div>
+                <div class="recipe-link">
+                    <a href="${meal.sourceUrl}" target="_blank">View Full Recipe</a>
+                </div>
+            `;
+
+            mealDetailsContent.innerHTML = html;
+            mealDetailsContent.parentElement.classList.add("showRecipe");
+        } catch (error) {
+            mealDetailsContent.innerHTML = `<p>⚠️ Error loading recipe details.</p>`;
+            console.error("API Error:", error);
+        }
+    }
+
+
+    // Close the modal when the close button is clicked
+    recipeCloseBtn.addEventListener("click", () => {
+    mealDetailsContent.parentElement.classList.remove("showRecipe");
+});
+
 }
