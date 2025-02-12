@@ -10,3 +10,5 @@ def fetch_random_recipe():
     response = requests.get(f"{API_BASE_URL}random.php")
     return response.json().get('meals', [])
 
+
+

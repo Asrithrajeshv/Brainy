@@ -108,3 +108,6 @@ def recipe_detail_view(request, recipe_name):
     recipe_details = response.text  # Adjust this based on the Gemini response
 
     return render(request, "recipe_detail.html", {"recipe": recipe_details})
+
+def index(request):
+    return render(request, 'brainy/search.html')
