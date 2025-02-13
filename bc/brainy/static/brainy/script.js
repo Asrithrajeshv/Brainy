@@ -99,10 +99,11 @@ async function getMealRecipe(e) {
                 <div class="recipe-meal-img">
                     <img src="${meal.image}" alt="">
                 </div>
-                <div class="recipe-link">
-                    <a href="${meal.sourceUrl}" target="_blank">View Full Recipe</a>
-                </div>
-                <button class="view-full-recipe-btn" onclick="viewFullRecipe(${meal.id})">View Full Recipe</button>
+                 <div class = "recipe-link">
+            <a href = "${meal.sourceUrl}" target = "_blank">View Full Recipe</a>
+
+        </div>
+                <button class="view-full-recipe-btn" onclick="viewFullRecipe(${meal.id})">View detailed instruction</button>
             `;
 
             mealDetailsContent.innerHTML = html;
@@ -115,6 +116,6 @@ async function getMealRecipe(e) {
 }
 
 // Redirect to full recipe page
-function viewFullRecipe(mealID) {
-    window.location.href = `recipe.html?mealID=${mealID}`;
+function viewFullRecipe(recipeId) {
+    window.location.href = `/recipe/${recipeId}/`;
 }
