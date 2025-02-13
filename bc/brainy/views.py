@@ -119,3 +119,13 @@ def recipe_view(request):
     if not meal_id:
         return render(request, '404.html')  # Handle missing mealID
     return render(request, 'recipe.html', {'meal_id': meal_id})
+
+
+
+def redirect_to_nextjs(request):
+    return redirect("http://localhost:3000/")
+
+from django.http import JsonResponse
+
+def api_view(request):
+    return JsonResponse({"message": "Django API is working!"})
