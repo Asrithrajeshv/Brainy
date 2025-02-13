@@ -137,6 +137,21 @@ def saved_recipes_view(request):
     saved_recipes = SavedRecipe.objects.filter(user=request.user)
     return render(request, "saved_recipes.html", {"saved_recipes": saved_recipes})
 
+def recipe_view(request):
+    meal_id = request.GET.get('mealID')
+    if not meal_id:
+        return render(request, '404.html')  # Handle missing mealID
+    return render(request, 'recipe.html', {'meal_id': meal_id})
+
+
+
+def redirect_to_nextjs(request):
+    return redirect("http://localhost:3000/")
+
+from django.http import JsonResponse
+
+def api_view(request):
+    return JsonResponse({"message": "Django API is working!"})
 def recipe_view(request, recipe_id):
     API_KEY = "8fec620392384f819c73a5e188f16c36"
     api_url = f"https://api.spoonacular.com/recipes/{recipe_id}/information"
