@@ -5,16 +5,32 @@ const recipeCloseBtn = document.getElementById("recipe-close-btn");
 
 const API_KEY = "8fec620392384f819c73a5e188f16c36"; // Replace with your Spoonacular API key
 
+// Initialize Zapier Chatbot
+function initZapierChatbot() {
+    // Create and append the script
+    const zapierScript = document.createElement('script');
+    zapierScript.async = true;
+    zapierScript.type = 'module';
+    zapierScript.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
+    document.head.appendChild(zapierScript);
+
+    // Create and append the chatbot element
+    const chatbotElement = document.createElement('zapier-interfaces-chatbot-embed');
+    chatbotElement.setAttribute('is-popup', 'true');
+    chatbotElement.setAttribute('chatbot-id', 'cm7262k2p0041bm8jff2n44bc');
+    document.body.appendChild(chatbotElement);
+}
+
+// Call the initialization function when the page loads
+document.addEventListener('DOMContentLoaded', initZapierChatbot);
+
 // Event Listeners
 searchBtn.addEventListener("click", getMealList);
 mealList.addEventListener("click", getMealRecipe);
-recipeCloseBtn.addEventListener(() => {
+recipeCloseBtn.addEventListener("click", () => {
     mealDetailsContent.parentElement.classList.remove("showRecipe");
 });
 
-
-    // ✅ Check if input contains only letters (No numbers or special characters)
-  
 // Get meal list based on multiple ingredients
 async function getMealList() {
     let searchInputTxt = document.getElementById("search-input").value.trim();
@@ -95,11 +111,4 @@ async function getMealRecipe(e) {
             console.error("API Error:", error);
         }
     }
-
-
-    // Close the modal when the close button is clicked
-    recipeCloseBtn.addEventListener("click", () => {
-    mealDetailsContent.parentElement.classList.remove("showRecipe");
-});
-
 }
