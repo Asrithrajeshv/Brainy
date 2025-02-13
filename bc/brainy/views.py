@@ -111,3 +111,11 @@ def recipe_detail_view(request, recipe_name):
 
 def index(request):
     return render(request, 'brainy/search.html')
+
+from django.shortcuts import render
+
+def recipe_view(request):
+    meal_id = request.GET.get('mealID')
+    if not meal_id:
+        return render(request, '404.html')  # Handle missing mealID
+    return render(request, 'recipe.html', {'meal_id': meal_id})

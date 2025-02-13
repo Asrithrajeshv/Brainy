@@ -11,7 +11,10 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('gsearch/', views.search_recipes_view, name='search'),
     path('recipe-detail/<str:recipe_name>/', views.recipe_detail_view, name='recipe-detail'),
-    path('index/', views.index, name='index')
+    path('index/', views.index, name='index'),
+    path('recipe.html', views.recipe_view, name='recipe-view'),
+
+
 ]
 
 

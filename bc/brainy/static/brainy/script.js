@@ -8,18 +8,15 @@ const API_KEY = "8fec620392384f819c73a5e188f16c36"; // Replace with your Spoonac
 // Event Listeners
 searchBtn.addEventListener("click", getMealList);
 mealList.addEventListener("click", getMealRecipe);
-recipeCloseBtn.addEventListener(() => {
+recipeCloseBtn.addEventListener("click", () => {
     mealDetailsContent.parentElement.classList.remove("showRecipe");
 });
 
-
-    // ✅ Check if input contains only letters (No numbers or special characters)
-  
 // Get meal list based on multiple ingredients
 async function getMealList() {
     let searchInputTxt = document.getElementById("search-input").value.trim();
-    
-    if (!/^[A-Za-z\s]+$/.test(searchInputTxt)) {  
+
+    if (!/^[A-Za-z\s,]+$/.test(searchInputTxt)) {      
         mealList.innerHTML = `<p>❌ Only letters are allowed! No numbers or special characters.</p>`;
         return;
     }
@@ -78,7 +75,7 @@ async function getMealRecipe(e) {
                 <p class="recipe-category">${meal.dishTypes ? meal.dishTypes.join(", ") : "N/A"}</p>
                 <div class="recipe-instruct">
                     <h3>Instructions:</h3>
-                    <p>${meal.instructions || "No instructions available."}</p>
+                    <p>${meal.instructions ? meal.instructions.substring(0, 200) + "..." : "No instructions available."}</p>
                 </div>
                 <div class="recipe-meal-img">
                     <img src="${meal.image}" alt="">
@@ -86,6 +83,7 @@ async function getMealRecipe(e) {
                 <div class="recipe-link">
                     <a href="${meal.sourceUrl}" target="_blank">View Full Recipe</a>
                 </div>
+                <button class="view-full-recipe-btn" onclick="viewFullRecipe(${meal.id})">View Full Recipe</button>
             `;
 
             mealDetailsContent.innerHTML = html;
@@ -95,11 +93,9 @@ async function getMealRecipe(e) {
             console.error("API Error:", error);
         }
     }
+}
 
-
-    // Close the modal when the close button is clicked
-    recipeCloseBtn.addEventListener("click", () => {
-    mealDetailsContent.parentElement.classList.remove("showRecipe");
-});
-
+// Redirect to full recipe page
+function viewFullRecipe(mealID) {
+    window.location.href = `recipe.html?mealID=${mealID}`;
 }
