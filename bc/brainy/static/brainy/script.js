@@ -112,13 +112,9 @@ async function getMealRecipe(e) {
             console.error("API Error:", error);
         }
     }
-<<<<<<< HEAD
 }
 
 // Redirect to full recipe page
 function viewFullRecipe(mealID) {
     window.location.href = `recipe.html?mealID=${mealID}`;
 }
-=======
-}
->>>>>>> 71dc95db80239a4943ad5dd8f1bf839c34bdcf77
