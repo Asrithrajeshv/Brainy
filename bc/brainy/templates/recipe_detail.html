@@ -4,11 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ recipe.name }} - Recipe Details</title>
+    <style>
+        .save-recipe {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 15px; 
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .save-recipe:hover {
+            background-color: #cc5500;
+        }
+    </style>
 </head>
 <body>
 
     <h1>{{ recipe.name }}</h1>
     <img src="{{ recipe.image }}" alt="Recipe Image">
+
     <h2>Ingredients:</h2>
     <ul>
         {% for ingredient in recipe.ingredients %}
@@ -27,6 +43,20 @@
 
     <h2>Diet Suitability:</h2>
     <p>{{ recipe.diet }}</p>
+    
+
+    <!-- Video Section -->
+    {% if recipe.video_url %}
+    <h2>Watch Video:</h2>
+    <a href="{{ recipe.video_url }}" target="_blank">Watch Video</a>
+    {% endif %}
+    
+    <!-- Save Button -->
+    <form method="POST" action="{% url 'save_recipe' %}">
+        {% csrf_token %}
+        <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+        <button type="submit" class="save-recipe">Save Recipe</button>
+    </form>
 
     <a href="/gsearch/">Back to Search</a>
 

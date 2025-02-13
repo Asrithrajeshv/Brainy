@@ -152,3 +152,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 import os
 
 CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (for development only)
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+

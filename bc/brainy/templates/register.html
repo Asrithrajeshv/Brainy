@@ -23,7 +23,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background: url("{% static 'brainy/bg.jpg' %}") no-repeat ;
+        background: url("{% static 'brainy/bg.jpg' %}") no-repeat;
         background-size: cover;
     }
 
@@ -43,7 +43,7 @@
         margin-bottom: 20px;
     }
 
-    .wrapper .input-box {
+    .input-box {
         position: relative;
         width: 100%;
         height: 50px;
@@ -75,27 +75,6 @@
         font-size: 20px;
     }
 
-    .wrapper .remember-forgot {
-        display: flex;
-        justify-content: space-between;
-        font-size: 14.5px;
-        margin: -15px 0 15px;
-    }
-
-    .wrapper .remember-forgot label input {
-        accent-color: #fff;
-        margin-right: 3px;
-    }
-
-    .wrapper .remember-forgot a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .wrapper .remember-forgot a:hover {
-        text-decoration: underline;
-    }
-
     .wrapper .btn {
         width: 100%;
         height: 45px;
@@ -103,14 +82,17 @@
         border: none;
         outline: none;
         border-radius: 40px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .1);
         cursor: pointer;
         font-size: 16px;
         color: #fff;
         font-weight: 600;
     }
 
-    .wrapper .register-link {
+    .wrapper .btn:hover {
+        background: #005bb5;
+    }
+
+    .register-link {
         font-size: 14.5px;
         text-align: center;
         margin: 20px 0 15px;
@@ -126,25 +108,9 @@
         text-decoration: underline;
     }
 
-    .wrapper .btn:hover {
-        background: #005bb5;
-    }
-
-    .app-name {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .app-name h1 {
-        font-size: 40px;
-        color: #55087e;  
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
-    /* Message styles */
+    /* Error message styles */
     .messages {
-        color: #ff6347;  /* Red for error messages */
+        color: #ff6347; /* Red color for error messages */
         text-align: center;
         margin: 15px 0;
     }
@@ -155,40 +121,38 @@
   </style>
 </head>
 <body>
-  
-  
 
   <div class="wrapper">
-    <form method="POST">
+    <form id="registerForm" method="POST">
       {% csrf_token %}
       <h1>Register</h1>
-      
+
       <!-- Username input -->
       <div class="input-box">
-        <input type="text" name="username" placeholder="Username" required>
+        <input type="text" id="username" name="username" placeholder="Username" required>
         <i class='bx bxs-user'></i>
       </div>
 
       <!-- Email input -->
       <div class="input-box">
-        <input type="email" name="email" placeholder="Email" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
         <i class='bx bxs-envelope'></i>
       </div>
 
       <!-- Password input -->
       <div class="input-box">
-        <input type="password" name="password1" placeholder="Password" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
         <i class='bx bxs-lock-alt'></i>
       </div>
 
       <!-- Confirm Password input -->
       <div class="input-box">
-        <input type="password" name="password2" placeholder="Confirm Password" required>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
         <i class='bx bxs-lock-alt'></i>
       </div>
 
       <button type="submit" class="btn">Register</button>
-      
+
       <!-- Success/Error messages -->
       {% if messages %}
         <div class="messages">
@@ -197,11 +161,43 @@
           {% endfor %}
         </div>
       {% endif %}
-      
+
       <div class="register-link">
         <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
       </div>
     </form>
   </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        window.location.href = "{% url 'login' %}"; // Redirect to login page
+      } else {
+        alert(data.message); // Show error message
+      }
+    });
+  </script>
+
 </body>
 </html>
