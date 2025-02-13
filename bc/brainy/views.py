@@ -154,3 +154,11 @@ def recipe_view(request, recipe_id):
         return render(request, 'recipe.html', context)
     else:
         return render(request, '404.html') 
+    
+def redirect_to_nextjs(request):
+    return redirect("http://localhost:3000/")
+
+from django.http import JsonResponse
+
+def api_view(request):
+    return JsonResponse({"message": "Django API is working!"})
