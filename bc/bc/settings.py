@@ -135,3 +135,7 @@ STATICFILES_DIRS = [
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 GEMINI_API_KEY = "AIzaSyDZNQnwqLn0E4CGr24bVJYEbCqgKfbov4Y"
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+

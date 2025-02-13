@@ -15,6 +15,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
+from .models import SavedRecipe, Recipe
 
 
 
@@ -34,19 +35,28 @@ def register_view(request):
 
 
 
+
 def login_view(request):
+    print("🚀 login_view function triggered")  # Debugging
+    
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        
-        user = authenticate(request, username=username, password=password)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        print(f"🔍 Attempting login with: {username}, {password}")  # Debugging
+
+        user = authenticate(request, username="keerthi", password="keer12")
+        print(user)
         if user is not None:
+            print("✅ Authentication successful!")  # Debugging
             login(request, user)
-            return redirect('home')  
+            return redirect('home')
         else:
+            print("❌ Authentication failed!")  # Debugging
             messages.error(request, 'Invalid credentials. Please try again.')
 
     return render(request, 'login.html')
+
 
 
 def home_view(request):
@@ -108,6 +118,17 @@ def recipe_detail_view(request, recipe_name):
     recipe_details = response.text  # Adjust this based on the Gemini response
 
     return render(request, "recipe_detail.html", {"recipe": recipe_details})
+
+def save_recipe(request):
+    if request.method == "POST":
+        recipe_id = request.POST.get("recipe_id")
+        recipe = Recipe.objects.get(id=recipe_id)  # Adjust based on your model
+
+        saved_recipe, created = SavedRecipe.objects.get_or_create(user=request.user, recipe=recipe)
+        if created:
+            saved_recipe.save()
+    
+    return redirect("saved_recipes")
 
 def index(request):
     return render(request, 'brainy/search.html')
