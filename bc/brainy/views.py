@@ -137,5 +137,20 @@ def saved_recipes_view(request):
     saved_recipes = SavedRecipe.objects.filter(user=request.user)
     return render(request, "saved_recipes.html", {"saved_recipes": saved_recipes})
 
-def recipe_view(request):
-    return render(request, "recipe.html")  # Make sure "recipe.html" exists
+def recipe_view(request, recipe_id):
+    API_KEY = "8fec620392384f819c73a5e188f16c36"
+    api_url = f"https://api.spoonacular.com/recipes/{recipe_id}/information"
+    params = {
+        "apiKey": API_KEY,
+        "includeNutrition": True
+    }
+    
+    response = requests.get(api_url, params=params)
+    if response.status_code == 200:
+        recipe_data = response.json()
+        context = {
+            'recipe': recipe_data,
+        }
+        return render(request, 'recipe.html', context)
+    else:
+        return render(request, '404.html') 

@@ -152,3 +152,34 @@ h2 {
     color: var(--primary-color);
     margin: 1.5rem 0 1rem 0;
 }
+
+/* Style for numbered steps in recipe instructions */
+.instructions-list {
+    counter-reset: step-counter;
+    list-style: none;
+    padding-left: 0;
+}
+
+.instructions-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--background-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0.5rem;
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.instructions-list li::before {
+    counter-increment: step-counter;
+    content: counter(step-counter) ".";
+    font-weight: bold;
+    color: var(--primary-color);
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}

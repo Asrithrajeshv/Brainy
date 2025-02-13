@@ -99,10 +99,7 @@ async function getMealRecipe(e) {
                 <div class="recipe-meal-img">
                     <img src="${meal.image}" alt="">
                 </div>
-                 <div class = "recipe-link">
-            <a href = "${meal.sourceUrl}" target = "_blank">View Full Recipe</a>
-
-        </div>
+                 
                 <button class="view-full-recipe-btn" onclick="viewFullRecipe(${meal.id})">View detailed instruction</button>
             `;
 
