@@ -5,6 +5,25 @@ const recipeCloseBtn = document.getElementById("recipe-close-btn");
 
 const API_KEY = "8fec620392384f819c73a5e188f16c36"; // Replace with your Spoonacular API key
 
+// Initialize Zapier Chatbot
+function initZapierChatbot() {
+    // Create and append the script
+    const zapierScript = document.createElement('script');
+    zapierScript.async = true;
+    zapierScript.type = 'module';
+    zapierScript.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
+    document.head.appendChild(zapierScript);
+
+    // Create and append the chatbot element
+    const chatbotElement = document.createElement('zapier-interfaces-chatbot-embed');
+    chatbotElement.setAttribute('is-popup', 'true');
+    chatbotElement.setAttribute('chatbot-id', 'cm7262k2p0041bm8jff2n44bc');
+    document.body.appendChild(chatbotElement);
+}
+
+// Call the initialization function when the page loads
+document.addEventListener('DOMContentLoaded', initZapierChatbot);
+
 // Event Listeners
 searchBtn.addEventListener("click", getMealList);
 mealList.addEventListener("click", getMealRecipe);
@@ -93,9 +112,13 @@ async function getMealRecipe(e) {
             console.error("API Error:", error);
         }
     }
+<<<<<<< HEAD
 }
 
 // Redirect to full recipe page
 function viewFullRecipe(mealID) {
     window.location.href = `recipe.html?mealID=${mealID}`;
 }
+=======
+}
+>>>>>>> 71dc95db80239a4943ad5dd8f1bf839c34bdcf77
