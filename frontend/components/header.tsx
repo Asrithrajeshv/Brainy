@@ -9,8 +9,10 @@ import { Menu, X } from "lucide-react"
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Recipes", href: "/recipes" },
+  { name: "Recipes", href: "http://127.0.0.1:8000/ingredients/" },
   { name: "Contact", href: "/contact" },
+  { name: "Login", href: "/login" },     // Added Login
+  { name: "Signup", href: "/register" },  // Added Signup
 ]
 
 export function Header() {
@@ -87,4 +89,3 @@ export function Header() {
     </header>
   )
 }
-

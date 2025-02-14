@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@next/swc-win32-x64-msvc": "^15.1.7",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
+    "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.2",
     "lucide-react": "^0.475.0",
-    "next": "^14.2.16",
+    "next": "^14.2.24",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^3.0.1",
@@ -28,8 +30,8 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.16",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
   }
 }
