@@ -231,4 +231,20 @@ body {
     }
 }
 
+.assumed-ingredients {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.assumed-ingredients h3 {
+  margin-bottom: 10px;
+}
+
+.assumed-ingredients p {
+  margin: 0;
+}
+
 

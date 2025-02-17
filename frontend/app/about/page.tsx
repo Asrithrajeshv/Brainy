@@ -7,9 +7,9 @@ export default function About() {
       <NavBar />
       <div className="pt-32 container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-6">About CulinaryDelight</h1>
+          <h1 className="text-4xl font-bold mb-6">About Brainy Cook</h1>
           <p className="text-lg mb-6">
-            Welcome to CulinaryDelight, your ultimate destination for discovering delicious recipes from around the
+            Welcome to Brainy Cook, your ultimate destination for discovering delicious recipes from around the
             world. Our platform is designed to make cooking accessible, enjoyable, and inspiring for everyone, from
             beginners to seasoned chefs.
           </p>
@@ -19,7 +19,7 @@ export default function About() {
           </p>
           <p className="text-lg">
             Whether you're looking for quick weekday dinners, impressive dishes for special occasions, or want to
-            explore international cuisines, CulinaryDelight is here to guide you on your cooking journey.
+            explore international cuisines, Brainy Cook is here to guide you on your cooking journey.
           </p>
         </div>
       </div>

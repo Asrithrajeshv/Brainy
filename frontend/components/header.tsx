@@ -9,9 +9,10 @@ import { Menu, X } from "lucide-react"
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  // Use an anchor tag for external URLs like the saved recipes page
-  { name: "View Saved Recipes", href: "http://127.0.0.1:8000/saved-recipes/" },
+  { name: "Recipes", href: "http://127.0.0.1:8000/ingredients/" },
   { name: "Contact", href: "/contact" },
+  { name: "Login", href: "/login" },     // Added Login
+  { name: "Signup", href: "/register" },  // Added Signup
 ]
 
 export function Header() {
@@ -42,24 +43,13 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             {navItems.map((item) => (
-              item.name === "View Saved Recipes" ? (
-                // Use an anchor tag for the "View Saved Recipes" link
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-primary-700 hover:text-primary-900 font-medium transition duration-150 ease-in-out"
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-primary-700 hover:text-primary-900 font-medium transition duration-150 ease-in-out"
-                >
-                  {item.name}
-                </Link>
-              )
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-primary-700 hover:text-primary-900 font-medium transition duration-150 ease-in-out"
+              >
+                {item.name}
+              </Link>
             ))}
           </nav>
 
@@ -84,25 +74,14 @@ export function Header() {
             className="md:hidden py-4"
           >
             {navItems.map((item) => (
-              item.name === "View Saved Recipes" ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block py-2 text-primary-700 hover:text-primary-900 font-medium"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block py-2 text-primary-700 hover:text-primary-900 font-medium"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
+              <Link
+                key={item.name}
+                href={item.href}
+                className="block py-2 text-primary-700 hover:text-primary-900 font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
             ))}
           </motion.div>
         )}

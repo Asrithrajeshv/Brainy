@@ -32,6 +32,7 @@ recipeCloseBtn.addEventListener("click", () => {
 });
 
 // Get meal list based on multiple ingredients
+// Get meal list based on multiple ingredients
 async function getMealList() {
     let searchInputTxt = document.getElementById("search-input").value.trim();
 

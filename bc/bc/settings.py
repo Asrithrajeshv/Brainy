@@ -134,6 +134,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'brainy', 'static'),
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 GEMINI_API_KEY = "AIzaSyDZNQnwqLn0E4CGr24bVJYEbCqgKfbov4Y"
