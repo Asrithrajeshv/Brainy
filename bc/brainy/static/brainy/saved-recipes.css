@@ -1,0 +1,125 @@
+/* saved-recipes.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+#saved-recipes-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+h3 {
+    font-size: 1.8rem;
+    color: #444;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    max-height: 250px;
+    object-fit: cover;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: center;
+    line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+    #saved-recipes-container {
+        padding: 40px;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    li {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    img {
+        max-width: 200px;
+        margin-right: 20px;
+    }
+
+    p {
+        width: 60%;
+        text-align: left;
+    }
+}
+
+#saved-recipes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#saved-recipes-list li {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Add spacing for the delete button */
+.delete-button {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+/* Button hover effect */
+.delete-button:hover {
+    color: darkred;
+}
+
+#saved-recipes-list p {
+    font-size: 18px;
+    color: #888;
+}

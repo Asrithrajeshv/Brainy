@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Recipes</title>
+    <link rel="stylesheet" href="{% static 'brainy/saved-recipes.css' %}">
+</head>
+<body>
+    <div id="saved-recipes-container">
+        <h1>Saved Recipes</h1>
+
+        <ul id="saved-recipes-list">
+            <!-- Saved recipes will be dynamically inserted here -->
+        </ul>
+
+        <a href="{% url 'index' %}" class="back-button">🔙 Back to Search</a>
+    </div>
+
+    <script>
+        // Retrieve saved recipes from localStorage
+        const savedRecipes = JSON.parse(localStorage.getItem("savedRecipes") ?? "[]");
+
+        // Get the list element where saved recipes will be displayed
+        const savedRecipesList = document.getElementById("saved-recipes-list");
+
+        // Function to delete a recipe from savedRecipes and update localStorage
+        function deleteRecipe(recipeId) {
+            // Remove recipe from the savedRecipes array
+            const updatedRecipes = savedRecipes.filter(recipe => recipe.id !== recipeId);
+
+            // Save the updated recipes array back to localStorage
+            localStorage.setItem("savedRecipes", JSON.stringify(updatedRecipes));
+
+            // Refresh the page to reflect the updated list
+            location.reload();
+        }
+
+        // If there are saved recipes, display them
+        if (savedRecipes.length > 0) {
+            savedRecipes.forEach(function(recipe) {
+                const li = document.createElement("li");
+                li.classList.add("recipe-item"); // Add a class for styling
+
+                // Create a clickable link for the recipe title
+                const recipeLink = document.createElement("a");
+                recipeLink.href = `/recipe/${recipe.id}/`; // Redirect to the recipe detail page
+                recipeLink.innerText = recipe.title;
+                li.appendChild(recipeLink);
+
+                // Create a delete button for each recipe
+                const deleteButton = document.createElement("button");
+                deleteButton.innerText = "❌";
+                deleteButton.classList.add("delete-button");
+                deleteButton.onclick = function() {
+                    deleteRecipe(recipe.id); // Delete the recipe from localStorage
+                };
+
+                // Append the delete button to the list item at the end
+                li.appendChild(deleteButton);
+
+                // Append the list item to the saved recipes list
+                savedRecipesList.appendChild(li);
+            });
+        } else {
+            savedRecipesList.innerHTML = "<p>No saved recipes yet.</p>";
+        }
+    </script>
+
+</body>
+</html>
