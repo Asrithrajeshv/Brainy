@@ -69,11 +69,57 @@
             </div>
 
             <a href="{% url 'index' %}" class="back-button">🔙 Back to Search</a>
+            <button id="saveRecipe" class="save-btn">💾 Save</button>
         </div>
     </div>
-    <script src="{% static 'brainy/script.js' %}"></script>
+
+    <!-- Popup Message -->
+    <div id="savePopup" class="popup">Recipe saved!</div>
+
     <script>
-        // YouTube API key
+        // Your save button logic to save recipe locally in the browser
+        document.addEventListener("DOMContentLoaded", function () {
+            const saveButton = document.getElementById("saveRecipe");
+
+            if (saveButton) {
+                saveButton.addEventListener("click", function () {
+                    try {
+                        // Get the recipe title and id
+                        const recipeTitle = document.querySelector("#recipe-title").innerText;
+                        const recipeId = "{{ recipe.id }}"; // Assuming you have the recipe ID in the template
+
+                        // Retrieve saved recipes from localStorage
+                        let savedRecipes = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+
+                        // Check if the recipe is already saved
+                        if (!savedRecipes.some(recipe => recipe.id === recipeId)) {
+                            // Save both the recipe id and title
+                            savedRecipes.push({ id: recipeId, title: recipeTitle });
+                            localStorage.setItem("savedRecipes", JSON.stringify(savedRecipes));
+
+                            // Show popup
+                            const popup = document.getElementById("savePopup");
+                            popup.style.display = "block";
+
+                            setTimeout(() => {
+                                popup.style.display = "none";
+                            }, 2000);
+                        } else {
+                            alert("Recipe already saved!");
+                        }
+                    } catch (error) {
+                        console.error("Error saving recipe:", error);
+                    }
+                });
+            } else {
+                console.error("Save button not found!");
+            }
+        });
+    </script>
+
+    <script src="{% static 'brainy/script.js' %}"></script>
+
+    <script>
         const YT_API_KEY = "AIzaSyDE88n4aYd7XIBi4qOPuMhvQxURk398EsQ";
         const recipeTitle = "{{ recipe.title }}";
 
@@ -100,7 +146,6 @@
             }
         }
 
-        // Load video on page load
         window.addEventListener("load", loadYouTubeVideo);
     </script>
 </body>

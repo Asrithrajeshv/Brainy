@@ -28,6 +28,35 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 // Route to Handle Registration
+app.post("/save-recipe", async (req, res) => {
+  try {
+      const { name, image, instructions } = req.body;
+
+      // Check if recipe already exists
+      const existingRecipe = await Recipe.findOne({ name });
+      if (existingRecipe) {
+          return res.status(400).json({ message: "Recipe already saved!" });
+      }
+
+      const newRecipe = new Recipe({ name, image, instructions });
+      await newRecipe.save();
+
+      res.status(201).json({ message: "Recipe saved successfully!" });
+  } catch (error) {
+      console.error("Error saving recipe:", error);
+      res.status(500).json({ message: "Server error, try again!" });
+  }
+});
+app.get("/recipes", async (req, res) => {
+  try {
+      const recipes = await Recipe.find();
+      res.status(200).json(recipes);
+  } catch (error) {
+      console.error("Error fetching recipes:", error);
+      res.status(500).json({ message: "Server error, try again!" });
+  }
+});
+
 app.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;

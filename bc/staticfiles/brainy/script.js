@@ -118,3 +118,31 @@ async function getMealRecipe(e) {
 function viewFullRecipe(mealID) {
     window.location.href = `recipe.html?mealID=${mealID}`;
 }
+// Save Recipe to LocalStorage
+document.querySelector(".save-btn")?.addEventListener("click", async function () {
+    // Get recipe details dynamically
+    const recipeName = document.querySelector(".meal-name h3")?.innerText ?? "";
+    const recipeImage = document.querySelector(".meal-img img")?.src ?? "";
+    const recipeInstructions = document.querySelector(".recipe-instruct p")?.innerText ?? "";
+
+    const recipeData = {
+        name: recipeName,
+        image: recipeImage,
+        instructions: recipeInstructions
+    };
+
+    // Get saved recipes from localStorage or initialize to an empty array
+    const savedRecipes = JSON.parse(localStorage.getItem("savedRecipes") ?? "[]");
+
+    // Add new recipe to the saved recipes array
+    savedRecipes.push(recipeData);
+
+    // Save back to localStorage
+    localStorage.setItem("savedRecipes", JSON.stringify(savedRecipes));
+
+    alert("Recipe saved successfully!");
+
+    // After saving, navigate to the "Viewed Recipes" section (header)
+    window.location.href = "#saved-recipes-container";  // Or the correct ID or route
+});
+
