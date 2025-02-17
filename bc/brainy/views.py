@@ -50,7 +50,7 @@ def login_view(request):
         if user is not None:
             print("✅ Authentication successful!")  # Debugging
             login(request, user)
-            return redirect('home')
+            return redirect('http://localhost:3000/')
         else:
             print("❌ Authentication failed!")  # Debugging
             messages.error(request, 'Invalid credentials. Please try again.')
