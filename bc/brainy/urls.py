@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.views.generic import TemplateView
 from .views import save_recipe, saved_recipes_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('search/', views.search_recipes, name='search_recipes'),
@@ -24,6 +26,7 @@ urlpatterns = [
     path('recipe-detail/<str:recipe_name>/', views.recipe_detail_view, name='recipe-detail'),
     path('index/', views.index, name='index'),
     path('recipe/<int:recipe_id>/', views.recipe_view, name='recipe-view'),
+    path('image/', views.recipe_suggestion, name='recipe_suggestion'),
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
