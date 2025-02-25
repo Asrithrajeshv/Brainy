@@ -153,7 +153,7 @@ from django.http import JsonResponse
 def api_view(request):
     return JsonResponse({"message": "Django API is working!"})
 def recipe_view(request, recipe_id):
-    API_KEY = "8fec620392384f819c73a5e188f16c36"
+    API_KEY = "4d67beffe37b44e2ab6a5ce542a7dc17"
     api_url = f"https://api.spoonacular.com/recipes/{recipe_id}/information"
     params = {
         "apiKey": API_KEY,

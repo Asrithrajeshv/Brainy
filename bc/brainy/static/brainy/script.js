@@ -3,7 +3,7 @@ const mealList = document.getElementById("meal");
 const mealDetailsContent = document.querySelector(".meal-details-content");
 const recipeCloseBtn = document.getElementById("recipe-close-btn");
 
-const API_KEY = "8fec620392384f819c73a5e188f16c36"; // Replace with your Spoonacular API key
+const API_KEY = "4d67beffe37b44e2ab6a5ce542a7dc17"; // Replace with your Spoonacular API key
 
 // Initialize Zapier Chatbot
 function initZapierChatbot() {
