@@ -1,40 +1,75 @@
 const searchBtn = document.getElementById("search-btn");
+const voiceBtn = document.getElementById("voice-btn"); // Voice search button
 const mealList = document.getElementById("meal");
 const mealDetailsContent = document.querySelector(".meal-details-content");
 const recipeCloseBtn = document.getElementById("recipe-close-btn");
+const searchInput = document.getElementById("search-input");
 
 const API_KEY = "4d67beffe37b44e2ab6a5ce542a7dc17"; // Replace with your Spoonacular API key
 
 // Initialize Zapier Chatbot
 function initZapierChatbot() {
-    // Create and append the script
     const zapierScript = document.createElement('script');
     zapierScript.async = true;
     zapierScript.type = 'module';
     zapierScript.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
     document.head.appendChild(zapierScript);
 
-    // Create and append the chatbot element
-    const chatbotElement = document.createElement('zapier-interfaces-chatbot-embed');
-    chatbotElement.setAttribute('is-popup', 'true');
-    chatbotElement.setAttribute('chatbot-id', 'cm7262k2p0041bm8jff2n44bc');
-    document.body.appendChild(chatbotElement);
+    zapierScript.onload = () => {
+        const chatbotElement = document.createElement('zapier-interfaces-chatbot-embed');
+        chatbotElement.setAttribute('is-popup', 'false');
+        chatbotElement.setAttribute('chatbot-id', 'cm7u4f5ex005wgbmuej0fdxjv');
+        chatbotElement.setAttribute('height', '600px');
+        chatbotElement.setAttribute('width', '400px');
+        document.body.appendChild(chatbotElement);
+    };
 }
 
-// Call the initialization function when the page loads
+
 document.addEventListener('DOMContentLoaded', initZapierChatbot);
 
 // Event Listeners
 searchBtn.addEventListener("click", getMealList);
+voiceBtn.addEventListener("click", startVoiceRecognition); // Voice button event
 mealList.addEventListener("click", getMealRecipe);
 recipeCloseBtn.addEventListener("click", () => {
     mealDetailsContent.parentElement.classList.remove("showRecipe");
 });
 
-// Get meal list based on multiple ingredients
+// Voice Recognition Function
+function startVoiceRecognition() {
+    if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
+        alert("❌ Your browser does not support speech recognition. Please use Chrome.");
+        return;
+    }
+
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onstart = function () {
+        voiceBtn.innerHTML = "🎙️ Listening...";
+    };
+
+    recognition.onspeechend = function () {
+        recognition.stop();
+        voiceBtn.innerHTML = "🎤 Voice Search";
+    };
+
+    recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        searchInput.value = transcript;
+        getMealList(); // Automatically search after getting voice input
+    };
+
+    recognition.onerror = function (event) {
+        alert("Error occurred in recognition: " + event.error);
+    };
+}
+
 // Get meal list based on multiple ingredients
 async function getMealList() {
-    let searchInputTxt = document.getElementById("search-input").value.trim();
+    let searchInputTxt = searchInput.value.trim();
 
     if (!/^[A-Za-z\s,]+$/.test(searchInputTxt)) {      
         mealList.innerHTML = `<p>❌ Only letters are allowed! No numbers or special characters.</p>`;
@@ -100,7 +135,6 @@ async function getMealRecipe(e) {
                 <div class="recipe-meal-img">
                     <img src="${meal.image}" alt="">
                 </div>
-                 
                 <button class="view-full-recipe-btn" onclick="viewFullRecipe(${meal.id})">View detailed instruction</button>
             `;
 
