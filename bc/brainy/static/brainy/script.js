@@ -17,8 +17,9 @@ function initZapierChatbot() {
 
     zapierScript.onload = () => {
         const chatbotElement = document.createElement('zapier-interfaces-chatbot-embed');
-        chatbotElement.setAttribute('is-popup', 'false');
-        chatbotElement.setAttribute('chatbot-id', 'cm7u4f5ex005wgbmuej0fdxjv');
+        chatbotElement.setAttribute('is-popup', 'true');
+        chatbotElement.setAttribute('chatbot-id', 'cm8hitqll000dc9c66jaxystu');
+
         chatbotElement.setAttribute('height', '600px');
         chatbotElement.setAttribute('width', '400px');
         document.body.appendChild(chatbotElement);
